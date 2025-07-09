@@ -1,0 +1,242 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+body {
+  position: relative;
+  display: flex;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+button {
+  display: inline-block;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+a {
+  font-family: "Inter", sans-serif;
+}
+.sidebar {
+  width: 400px;
+  height: 100vh;
+  background-color: rgb(0, 110, 255);
+  color: white;
+  border-top: 1px solid white;
+}
+.sidebar > h2 {
+  padding: 20px;
+  border-bottom: 1px solid white;
+}
+.side-item {
+  display: grid;
+  align-items: center;
+  justify-content: start;
+  margin-top: 30px;
+  gap: 20px;
+  padding: 0 20px;
+}
+.side-item > li > a {
+  color: white;
+  font-weight: 800;
+}
+header {
+  display: none;
+  margin: 0;
+}
+:root {
+  --primary: #3498db;
+  --primary-light: #5dade2;
+  --danger: #e74c3c;
+  --danger-light: #f5b7b1;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --text: #2c3e50;
+  --text-light: #ecf0f1;
+  --bg: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --border: #dfe6e9;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --radius: 8px;
+}
+
+.dos-admin {
+  padding: 2rem;
+  width: 100%;
+  background: var(--bg-secondary);
+  min-height: calc(100vh - 60px);
+}
+
+.admin-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.admin-head h2 {
+  color: var(--primary);
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.admin-head a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background 0.3s;
+  font-weight: 600;
+}
+
+.admin-head a:hover {
+  background: var(--primary-light);
+}
+
+.table-container {
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-radius: 10px;
+}
+.admin-content {
+  padding: 2rem;
+  background: var(--bg-secondary);
+  min-height: calc(100vh - 60px);
+  width: 100%;
+  overflow: auto;
+}
+.table th {
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover {
+  background: rgba(52, 152, 219, 0.05);
+}
+
+.table td img {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.redo {
+  display: grid;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.add,
+.del {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.add {
+  background: var(--primary);
+  color: var(--text-light);
+}
+
+.add:hover {
+  background: var(--primary-light);
+}
+
+.del {
+  background: var(--danger);
+  color: var(--text-light);
+}
+
+.del:hover {
+  background: #c0392b;
+}
+
+.content-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-secondary);
+}
+
+@media (max-width: 768px) {
+  .admin-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .redo {
+    grid-template-columns: 1fr;
+  }
+}

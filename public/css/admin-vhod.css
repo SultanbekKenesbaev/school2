@@ -1,0 +1,77 @@
+:root {
+  --glass-white: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --text-dark: #1c2436;
+  --text-light: #ffffff;
+  --shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --glass-blur: 12px;
+}
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-image: url("../images/Rectangle\ 1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 97vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box {
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.589);
+  color: rgb(28, 28, 65);
+  padding: 60px 40px;
+}
+.inputs {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+h2 {
+  text-align: center;
+  font-size: 40px;
+}
+.inputs > input {
+  width: 300px;
+  margin: 20px 0;
+  padding: 7px 12px;
+  border: none;
+  border-bottom: 1px solid rgb(28, 28, 65);
+}
+input:focus {
+  outline: none;
+  border-bottom: 1px solid rgb(28, 28, 65);
+}
+
+.box > form {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+form > button {
+  padding: 0.75rem 1.5rem;
+  background: var(--glass-white);
+  color: var(--text-dark);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+.inputs {
+  margin-top: 40px;
+}
+.inputs > label {
+  font-size: 20px;
+  font-weight: 500px;
+}
