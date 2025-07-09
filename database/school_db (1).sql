@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: localhost:3306
--- Время создания: Июн 18 2025 г., 11:29
--- Версия сервера: 5.7.24
--- Версия PHP: 8.3.1
+-- Хост: sql305.byetcluster.com
+-- Время создания: Июл 08 2025 г., 04:14
+-- Версия сервера: 11.4.7-MariaDB
+-- Версия PHP: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `school_db`
+-- База данных: `if0_39335783_school_db`
 --
 
 -- --------------------------------------------------------
@@ -32,15 +33,17 @@ CREATE TABLE `achievements` (
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Дамп данных таблицы `achievements`
 --
 
 INSERT INTO `achievements` (`id`, `title`, `description`, `image`, `created_at`) VALUES
-(1, 'ууууууууууууууууууууууу', 'уууууууууууууууууууууу', 'uploads/photo_2024-04-29_12-30-17.jpg', '2025-03-20 06:21:24');
+(2, 'Учебное достижение', 'В 2024 году ученица 8-А класса Алина Ахметова заняла 1-е место в районной олимпиаде по английскому языку, обойдя 23 участника из других школ.', 'uploads/6465c2b9b4aaf_1.jpg', '2025-07-02 12:49:31'),
+(3, 'Спортивное достижение', 'Команда школы №5 стала победителем городского турнира по мини-футболу среди школьников, выиграв финальный матч со счётом 3:1.', 'uploads/720___iqPsbq2OF6mgX3E7uwl1emn5OBTXBUA.jpg', '2025-07-02 12:50:28'),
+(4, 'IT-достижение', 'Команда школьного IT-кружка стала победителем районного конкурса проектов по программированию, представив мобильное приложение для учёта успеваемости.', 'uploads/6e84a8bd-ccf5-48d3-9b38-449af37e9ddc.jpeg', '2025-07-02 12:51:44');
 
 -- --------------------------------------------------------
 
@@ -52,14 +55,14 @@ CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Дамп данных таблицы `admins`
 --
 
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES
-(1, 'admin', '$2y$10$QO2zPZc6rX1eCRXzNcQUZOlg0EU8GhTVQqA8E5/QUtPwgRfEX/DJS');
+(2, 'admin.5.mektep', '$2y$10$Cq.SpaUzpCJ04vRfndzitOVG0Qz1SSKiYkrysNPD1fmlKEKVfbDGe');
 
 -- --------------------------------------------------------
 
@@ -72,47 +75,17 @@ CREATE TABLE `news` (
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Дамп данных таблицы `news`
 --
 
 INSERT INTO `news` (`id`, `title`, `content`, `image`, `created_at`) VALUES
-(1, 'фффффффф', 'ввввввввввввввввввввввв', 'uploads/photo_2024-09-24_13-10-25.jpg', '2025-03-20 06:19:57');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `questions`
---
-
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL,
-  `subject_id` int(11) DEFAULT NULL,
-  `question_text` text NOT NULL,
-  `option1` text NOT NULL,
-  `option2` text,
-  `option3` text,
-  `option4` text,
-  `correct_option` int(11) DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `questions`
---
-
-INSERT INTO `questions` (`id`, `subject_id`, `question_text`, `option1`, `option2`, `option3`, `option4`, `correct_option`) VALUES
-(2, 1, 'вмоактмоук ', 'пмд35кьпмлукм', 'мдкьпмдукщмькщ', 'кбкщкз', 'кзщмлукщбк', 1),
-(3, 1, 'керуруеи', 'уиекикеиек', 'уиекиекиек', 'иеиекиек', 'иеиекиек', 1),
-(4, 1, 'иекиекиекиекиеки', 'екекикеикеие', 'екиекикк', 'киекиекиеки', 'еиекиеки', 1),
-(5, 1, 'иеиекиекиекиекиеки', 'иекиекикеике', 'иекиекиеки', 'ииекиекике', 'еиекиекике', 1),
-(6, 1, 'иекиекикеиеиекиекиекиек', 'иекиекиекиекиек', 'иекиекиеки', 'екиекиекиек', 'иекиекиек', 1),
-(7, 1, 'иекиекиекиекиекиекие', 'иекиекиеки', 'екиекиеки', 'екиекиек', 'иекиекипа', 1),
-(8, 1, 'иекикииненикни', 'кмкумкмук', 'мкумукмуку', 'мукмукмук', 'мукмукукмм', 1),
-(9, 1, 'мукмукмумукмкмумук', 'мукмукмук', 'укмукм', 'мукмукмкукм', 'мукмукмукмук', 1),
-(10, 1, 'мукмукмукмукмукмук', 'мукмукм', 'кмукмукм', 'кукмукмукм', 'кумукмукм', 1);
+(3, '«Вы — золотое поколение, строители Нового Узбекистана». Президент поздравил с Днём молодёжи', 'Президент Узбекистана поздравил молодых людей с Днём молодёжи и назвал их «золотым поколением», которое создаст «новую историю как строители Нового Узбекистана».', 'uploads/image_2025-07-02_17-24-09.png', '2025-07-02 12:24:39'),
+(4, 'В Узбекистане ученики 7–9 классов начнут учиться в университетах', 'Ташкент, Узбекистан – АН Podrobno.uz. С 1 сентября в Узбекистане стартует новый эксперимент: школьники 7–9 классов будут проходить часть занятий прямо в вузах. Цель — помочь детям познакомиться с разными профессиями, выбрать будущую специальность и получить первые практические навыки. \r\n\r\n', 'uploads/image_2025-07-02_17-26-26.png', '2025-07-02 12:26:37'),
+(5, 'Ученики школ начнут обучаться в университетах: новый эксперимент в Ташкенте', 'Vaib.uz (Узбекистан. 2 июля). С 1 сентября 2025 года в Узбекистане стартует новый экспериментальный проект по подготовке кадров по схеме «школа — техникум (лицей) — университет». Цель этой инициативы — создать непрерывную образовательную цепочку, которая поможет школьникам уже с раннего возраста определиться с будущей профессией и осознанно строить свой образовательный маршрут.\r\n\r\nПервыми участниками проекта станут учащиеся школ №250 и №273 Юнусабадского района Ташкента. Эти учебные заведения будут прикреплены к Ташкентскому архитектурно-строительному университету.', 'uploads/image_2025-07-02_17-27-48.png', '2025-07-02 12:28:02');
 
 -- --------------------------------------------------------
 
@@ -124,18 +97,19 @@ CREATE TABLE `students` (
   `id` int(11) NOT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
-  `achievements` text,
-  `about` text,
+  `achievements` text DEFAULT NULL,
+  `about` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Дамп данных таблицы `students`
 --
 
 INSERT INTO `students` (`id`, `first_name`, `last_name`, `achievements`, `about`, `image`, `created_at`) VALUES
-(1, 'dddddddd', 'dddddddd', 'dddddddddddddddddd', 'dddddddddddddddd', 'uploads/photo_2024-04-29_12-30-17.jpg', '2025-04-08 16:39:34');
+(4, 'Жуманазар  Жумагалий улы', 'Бахтыбаев', 'Самый лучший ученик', '8-А класс ученика', 'uploads/Рисунок2.png', '2025-07-02 05:34:56'),
+(5, 'Айгерим ', 'Абдрасулова', 'Заняла 1-е место на районной олимпиаде по английскому языку среди учащихся 8-х классов.', 'Отличница, активно участвует в школьных мероприятиях, любит изучать иностранные языки и мечтает стать переводчиком.', 'uploads/Рисунок1.png', '2025-07-02 06:55:01');
 
 -- --------------------------------------------------------
 
@@ -146,21 +120,15 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `achievements`, `about`
 CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Дамп данных таблицы `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `name`) VALUES
-(1, 'Математика'),
-(2, 'Физика'),
-(3, 'История'),
-(4, 'Право'),
-(5, 'Русский язык'),
-(6, 'Биология'),
-(7, 'Химия'),
-(8, 'Английский язык');
+(1, 'математика'),
+(2, 'химия');
 
 -- --------------------------------------------------------
 
@@ -173,18 +141,40 @@ CREATE TABLE `teachers` (
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `subjects` varchar(255) DEFAULT NULL,
-  `achievements` text,
-  `about` text,
+  `achievements` text DEFAULT NULL,
+  `about` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Дамп данных таблицы `teachers`
 --
 
 INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `subjects`, `achievements`, `about`, `image`, `created_at`) VALUES
-(1, 'aaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaa', 'aaaaaa', 'aaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaa', 'uploads/photo_2024-04-29_12-30-17.jpg', '2025-04-08 16:58:09');
+(2, 'Зилиха Жанабаевна', 'Баймуратова ', 'Математика', 'Учитель года', 'Классный руководитель 10-А класса', 'uploads/Рисунок3.png', '2025-07-02 05:36:56'),
+(3, 'Умитхан Назарбай кызы', 'Юсупова ', ' Биология', 'Лидер профессионального мастерства', 'Люблю учить детей', 'uploads/Рисунок4.png', '2025-07-02 05:37:51');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tests`
+--
+
+CREATE TABLE `tests` (
+  `id` int(11) NOT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `test_name` varchar(255) NOT NULL,
+  `pdf_file` varchar(255) NOT NULL,
+  `correct_answers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
+) ;
+
+--
+-- Дамп данных таблицы `tests`
+--
+
+INSERT INTO `tests` (`id`, `subject_id`, `test_name`, `pdf_file`, `correct_answers`) VALUES
+(1, 1, 'математика блок тест 2025', '../public/uploads/8001705_matem_profil.pdf', '{\"1\":\"1\",\"2\":\"1\",\"3\":\"1\",\"4\":\"1\",\"5\":\"1\",\"6\":\"1\",\"7\":\"1\",\"8\":\"1\",\"9\":\"1\",\"10\":\"1\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"14\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"18\":\"1\",\"19\":\"1\",\"20\":\"1\",\"21\":\"1\",\"22\":\"1\",\"23\":\"1\",\"24\":\"1\",\"25\":\"1\",\"26\":\"1\",\"27\":\"1\",\"28\":\"1\",\"29\":\"1\",\"30\":\"1\"}');
 
 -- --------------------------------------------------------
 
@@ -195,22 +185,27 @@ INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `subjects`, `achievemen
 CREATE TABLE `test_results` (
   `id` int(11) NOT NULL,
   `subject_id` int(11) DEFAULT NULL,
+  `test_id` int(11) DEFAULT NULL,
   `student_name` varchar(255) DEFAULT NULL,
   `student_lastname` varchar(255) DEFAULT NULL,
   `student_class` varchar(50) DEFAULT NULL,
+  `teacher_name` varchar(255) DEFAULT NULL,
   `total_questions` int(11) DEFAULT NULL,
   `correct_answers` int(11) DEFAULT NULL,
-  `details` json DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `answers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ;
 
 --
 -- Дамп данных таблицы `test_results`
 --
 
-INSERT INTO `test_results` (`id`, `subject_id`, `student_name`, `student_lastname`, `student_class`, `total_questions`, `correct_answers`, `details`, `created_at`) VALUES
-(1, 1, NULL, NULL, NULL, 2, 1, '[{\"correct\": 1, \"question\": \"вмоактмоук \", \"your_answer\": 1}, {\"correct\": 1, \"question\": \"что такое что?\", \"your_answer\": 2}]', '2025-06-18 10:46:19'),
-(2, 1, NULL, NULL, NULL, 10, 1, '[{\"correct\": 1, \"question\": \"вмоактмоук \", \"your_answer\": 1}, {\"correct\": 1, \"question\": \"мукмукмукмукмукмук\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"иекиекиекиекиеки\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"иекиекикеиеиекиекиекиек\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"мукмукмумукмкмумук\", \"your_answer\": 2}, {\"correct\": 1, \"question\": \"иекиекиекиекиекиекие\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"что такое что?\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"керуруеи\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"иеиекиекиекиекиеки\", \"your_answer\": 3}, {\"correct\": 1, \"question\": \"иекикииненикни\", \"your_answer\": 3}]', '2025-06-18 10:57:15');
+INSERT INTO `test_results` (`id`, `subject_id`, `test_id`, `student_name`, `student_lastname`, `student_class`, `teacher_name`, `total_questions`, `correct_answers`, `answers`, `created_at`) VALUES
+(1, 1, 1, 'султан', 'кенесбаев', '11д', 'Муратбек', 30, 27, '{\"1\":\"1\",\"2\":\"1\",\"3\":\"1\",\"4\":\"2\",\"5\":\"1\",\"6\":\"1\",\"7\":\"1\",\"8\":\"1\",\"9\":\"1\",\"10\":\"2\",\"11\":\"1\",\"12\":\"3\",\"13\":\"1\",\"14\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"18\":\"1\",\"19\":\"1\",\"20\":\"1\",\"21\":\"1\",\"22\":\"1\",\"23\":\"1\",\"24\":\"1\",\"25\":\"1\",\"26\":\"1\",\"27\":\"1\",\"28\":\"1\",\"29\":\"1\",\"30\":\"1\"}', '2025-07-04 00:15:13'),
+(2, 1, 1, 'султан', 'кенесбаев', '11д', 'Муратбек', 30, 29, '{\"1\":\"1\",\"2\":\"1\",\"3\":\"1\",\"4\":\"1\",\"5\":\"1\",\"6\":\"2\",\"7\":\"1\",\"8\":\"1\",\"9\":\"1\",\"10\":\"1\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"14\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"18\":\"1\",\"19\":\"1\",\"20\":\"1\",\"21\":\"1\",\"22\":\"1\",\"23\":\"1\",\"24\":\"1\",\"25\":\"1\",\"26\":\"1\",\"27\":\"1\",\"28\":\"1\",\"29\":\"1\",\"30\":\"1\"}', '2025-07-04 00:57:39'),
+(3, 1, 1, 'Ережепбаев', 'Жанполат', '11а', 'Альбина Муратбаева', 30, 3, '{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"3\",\"6\":\"2\",\"7\":\"1\",\"8\":\"2\",\"9\":\"3\",\"10\":\"4\",\"11\":\"4\",\"12\":\"4\",\"13\":\"3\",\"14\":\"3\",\"15\":\"2\",\"16\":\"4\",\"17\":\"4\",\"18\":\"2\",\"19\":\"2\",\"20\":\"3\",\"21\":\"3\",\"22\":\"2\",\"23\":\"3\",\"24\":\"4\",\"25\":\"2\",\"26\":\"3\",\"27\":\"1\",\"28\":\"4\",\"29\":\"3\",\"30\":\"2\"}', '2025-07-04 07:05:05'),
+(4, 1, 1, 'Султан', 'Кенесбаев', '11д', 'Мурат', 30, 28, '{\"1\":\"1\",\"2\":\"3\",\"3\":\"1\",\"4\":\"4\",\"5\":\"1\",\"6\":\"1\",\"7\":\"1\",\"8\":\"1\",\"9\":\"1\",\"10\":\"1\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"14\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"18\":\"1\",\"19\":\"1\",\"20\":\"1\",\"21\":\"1\",\"22\":\"1\",\"23\":\"1\",\"24\":\"1\",\"25\":\"1\",\"26\":\"1\",\"27\":\"1\",\"28\":\"1\",\"29\":\"1\",\"30\":\"1\"}', '2025-07-04 12:24:15'),
+(5, 1, 1, 'Ережепбаев', 'Жанполат', '10Б', 'Альбина Муратбаева', 30, 4, '{\"1\":\"2\",\"2\":\"1\",\"3\":\"2\",\"4\":\"3\",\"5\":\"4\",\"6\":\"3\",\"7\":\"2\",\"8\":\"1\",\"9\":\"1\",\"10\":\"2\",\"11\":\"3\",\"12\":\"2\",\"13\":\"3\",\"14\":\"2\",\"15\":\"2\",\"16\":\"3\",\"17\":\"3\",\"18\":\"3\",\"19\":\"3\",\"20\":\"3\",\"21\":\"2\",\"22\":\"1\",\"23\":\"3\",\"24\":\"3\",\"25\":\"4\",\"26\":\"4\",\"27\":\"4\",\"28\":\"3\",\"29\":\"3\",\"30\":\"4\"}', '2025-07-04 12:37:30'),
+(6, 1, 1, 'султан', 'кенесбаев', '11д', 'Муратбек', 30, 29, '{\"1\":\"1\",\"2\":\"1\",\"3\":\"1\",\"4\":\"1\",\"5\":\"1\",\"6\":\"1\",\"7\":\"1\",\"8\":\"1\",\"9\":\"1\",\"10\":\"1\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"14\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"18\":\"1\",\"19\":\"4\",\"20\":\"1\",\"21\":\"1\",\"22\":\"1\",\"23\":\"1\",\"24\":\"1\",\"25\":\"1\",\"26\":\"1\",\"27\":\"1\",\"28\":\"1\",\"29\":\"1\",\"30\":\"1\"}', '2025-07-05 01:08:26');
 
 --
 -- Индексы сохранённых таблиц
@@ -236,13 +231,6 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `subject_id` (`subject_id`);
-
---
 -- Индексы таблицы `students`
 --
 ALTER TABLE `students`
@@ -261,12 +249,6 @@ ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `test_results`
---
-ALTER TABLE `test_results`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -274,59 +256,49 @@ ALTER TABLE `test_results`
 -- AUTO_INCREMENT для таблицы `achievements`
 --
 ALTER TABLE `achievements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT для таблицы `questions`
---
-ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT для таблицы `tests`
+--
+ALTER TABLE `tests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `test_results`
 --
 ALTER TABLE `test_results`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `questions`
---
-ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
