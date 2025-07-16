@@ -1,12 +1,29 @@
 <?php
 require_once "includes/db.php";
 
+// Проверяем, существует ли lang.php
+if (!file_exists("includes/lang.php")) {
+    die("Ошибка: Файл includes/lang.php не найден.");
+}
+require_once "includes/lang.php";
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$stmt = $pdo->query("SELECT * FROM subjects");
-$subjects = $stmt->fetchAll();
+// Проверяем, загружены ли переводы
+global $translations;
+if (empty($translations)) {
+    error_log("Ошибка: Переводы не загружены для языка {$_SESSION['lang']}. Проверьте includes/lang/{$_SESSION['lang']}.json");
+}
+
+try {
+    $stmt = $pdo->query("SELECT * FROM subjects");
+    $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Ошибка базы данных (subjects): " . $e->getMessage());
+    die(t('error_query') . ": " . $e->getMessage());
+}
 
 $period = $_GET['period'] ?? 'all';
 $period_filters = [
@@ -26,9 +43,10 @@ try {
         GROUP BY student_name, student_lastname, student_class, teacher_name
         ORDER BY total_score DESC
         LIMIT 10
-    ")->fetchAll();
+    ")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Ошибка запроса: " . $e->getMessage());
+    error_log("Ошибка базы данных (top_students): " . $e->getMessage());
+    die(t('error_query') . ": " . $e->getMessage());
 }
 
 $subject_icons = [
@@ -47,7 +65,7 @@ $subject_icons = [
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Тесты</title>
+    <title><?= t('page_title_tests') ?></title>
     <link rel="stylesheet" href="./public/css/header.css">
     <link rel="stylesheet" href="./public/css/test.css">
     <link rel="stylesheet" href="./public/css/fotter.css">
@@ -75,11 +93,16 @@ $subject_icons = [
     </style>
 </head>
 <body>
-    <?php include("includes/header.php"); ?>
+    <?php
+    if (!file_exists("includes/header.php")) {
+        die("Ошибка: Файл includes/header.php не найден.");
+    }
+    include("includes/header.php");
+    ?>
 
-    <main class="container" id="translatable">
+    <main class="container">
         <section class="subjects-section">
-            <h1 class="section-title">Выберите предмет</h1>
+            <h1 class="section-title"><?= t('section_title_subjects') ?></h1>
             <div class="subjects-grid">
                 <?php foreach ($subjects as $subj):
                     $icon = $subject_icons[$subj['name']] ?? 'school';
@@ -91,10 +114,15 @@ $subject_icons = [
                             </div>
                             <h3 class="subject-name"><?= htmlspecialchars($subj['name']) ?></h3>
                             <div class="subject-meta">
-                                <span class="tests-count">Доступно тестов: <?php
-                                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM tests WHERE subject_id = ?");
-                                    $stmt->execute([$subj['id']]);
-                                    echo $stmt->fetchColumn();
+                                <span class="tests-count"><?= t('tests_available') ?>: <?php
+                                    try {
+                                        $stmt = $pdo->prepare("SELECT COUNT(*) FROM tests WHERE subject_id = ?");
+                                        $stmt->execute([$subj['id']]);
+                                        echo $stmt->fetchColumn();
+                                    } catch (PDOException $e) {
+                                        error_log("Ошибка базы данных (tests count): " . $e->getMessage());
+                                        echo "0";
+                                    }
                                 ?></span>
                                 <span class="material-icons arrow-icon">arrow_forward</span>
                             </div>
@@ -105,39 +133,39 @@ $subject_icons = [
         </section>
 
         <section class="top-students-section">
-            <h2 class="section-title">ТОП 10 лучших учеников</h2>
+            <h2 class="section-title"><?= t('section_title_top_students') ?></h2>
             <form method="get" class="filter-form">
-                <label>Период:</label>
+                <label><?= t('filter_label_period') ?>:</label>
                 <select name="period" class="filter-select" onchange="this.form.submit()">
-                    <option value="all" <?= $period == 'all' ? 'selected' : '' ?>>Все время</option>
-                    <option value="week" <?= $period == 'week' ? 'selected' : '' ?>>Неделя</option>
-                    <option value="month" <?= $period == 'month' ? 'selected' : '' ?>>Месяц</option>
-                    <option value="3months" <?= $period == '3months' ? 'selected' : '' ?>>3 месяца</option>
-                    <option value="6months" <?= $period == '6months' ? 'selected' : '' ?>>6 месяцев</option>
-                    <option value="year" <?= $period == 'year' ? 'selected' : '' ?>>Год</option>
+                    <option value="all" <?= $period == 'all' ? 'selected' : '' ?>><?= t('filter_option_all') ?></option>
+                    <option value="week" <?= $period == 'week' ? 'selected' : '' ?>><?= t('filter_option_week') ?></option>
+                    <option value="month" <?= $period == 'month' ? 'selected' : '' ?>><?= t('filter_option_month') ?></option>
+                    <option value="3months" <?= $period == '3months' ? 'selected' : '' ?>><?= t('filter_option_3months') ?></option>
+                    <option value="6months" <?= $period == '6months' ? 'selected' : '' ?>><?= t('filter_option_6months') ?></option>
+                    <option value="year" <?= $period == 'year' ? 'selected' : '' ?>><?= t('filter_option_year') ?></option>
                 </select>
             </form>
             <div class="achievement-badge">
                 <span class="material-icons">emoji_events</span>
-                <span>Лучшие результаты</span>
+                <span><?= t('best_results') ?></span>
             </div>
             <div class="table-container">
                 <table class="top-students-table">
                     <thead>
                         <tr>
-                            <th class="place-col">Место</th>
-                            <th class="student-col">Ученик</th>
-                            <th class="class-col">Класс</th>
-                            <th class="teacher-col">Учитель</th>
-                            <th class="score-col">Суммарный балл</th>
-                            <th class="badge-col">Награда</th>
-                            <th class="certificate-col">Сертификат</th>
+                            <th class="place-col"><?= t('table_header_place') ?></th>
+                            <th class="student-col"><?= t('table_header_student') ?></th>
+                            <th class="class-col"><?= t('table_header_class') ?></th>
+                            <th class="teacher-col"><?= t('table_header_teacher') ?></th>
+                            <th class="score-col"><?= t('table_header_score') ?></th>
+                            <th class="badge-col"><?= t('table_header_badge') ?></th>
+                            <th class="certificate-col"><?= t('table_header_certificate') ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($top_students)): ?>
                             <tr>
-                                <td colspan="7" style="text-align: center;">Нет данных для отображения</td>
+                                <td colspan="7" style="text-align: center;"><?= t('no_data') ?></td>
                             </tr>
                         <?php else: ?>
                             <?php $i = 1; ?>
@@ -170,7 +198,7 @@ $subject_icons = [
                                         <?php if ($i <= 3): ?>
                                             <a href="generate_certificate.php?rank=<?= $i ?>&name=<?= urlencode($student['student_name']) ?>&lastname=<?= urlencode($student['student_lastname']) ?>&class=<?= urlencode($student['student_class']) ?>" class="certificate-link">
                                                 <span class="material-icons">file_download</span>
-                                                Сертификат
+                                                <?= t('certificate') ?>
                                             </a>
                                         <?php else: ?>
                                             -
@@ -186,45 +214,12 @@ $subject_icons = [
         </section>
     </main>
 
-    <?php include("includes/footer.php"); ?>
+    <?php
 
-<script>
-(async function () {
-    const selectedLang = localStorage.getItem("selectedLang") || "rus_Cyrl";
-    if (selectedLang === "rus_Cyrl") return;
-
-    const elements = document.querySelectorAll(".lang");
-
-    for (const el of elements) {
-        const original = el.dataset.text || el.innerText.trim();
-        if (original.length < 1) continue;
-
-        try {
-            const res = await fetch("/tilmoch-proxy.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    text: original,
-                    source_lang: "rus_Cyrl",
-                    target_lang: selectedLang
-                })
-            });
-
-            const data = await res.json();
-            if (data.translated_text) {
-                el.innerText = data.translated_text;
-            }
-        } catch (err) {
-            console.error("Ошибка перевода:", err);
-        }
+    if (!file_exists("includes/footer.php")) {
+        die("Ошибка: Файл includes/footer.php не найден.");
     }
-})();
-</script>
-
-
-
-
+    include("includes/footer.php");
+    ?>
 </body>
 </html>

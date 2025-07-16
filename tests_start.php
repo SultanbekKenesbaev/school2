@@ -1,28 +1,51 @@
 <?php
 require_once "includes/db.php";
+require_once "includes/lang.php";
+
 $subject_id = $_GET['subject_id'] ?? 1;
 $stmt = $pdo->prepare("SELECT * FROM subjects WHERE id = ?");
 $stmt->execute([$subject_id]);
 $subject = $stmt->fetch();
 
-$subject_icons = [
-    'Математика' => 'functions',
-    'Физика' => 'bolt',
-    'Химия' => 'science',
-    'Биология' => 'eco',
-    'История' => 'history_edu',
-    'Литература' => 'menu_book',
-    'Русский язык' => 'translate',
-    'Английский язык' => 'language',
-    'География' => 'public',
-    'Информатика' => 'computer'
+// Map database subject names to translation keys
+$subject_translations = [
+    'Математика' => 'subject_math',
+    'Физика' => 'subject_physics',
+    'Химия' => 'subject_chemistry',
+    'Биология' => 'subject_biology',
+    'История' => 'subject_history',
+    'Литература' => 'subject_literature',
+    'Русский язык' => 'subject_russian',
+    'Английский язык' => 'subject_english',
+    'География' => 'subject_geography',
+    'Информатика' => 'subject_informatics'
 ];
-$icon = $subject_icons[$subject['name']] ?? 'school';
+
+// Get the translation key for the subject name
+$subject_key = $subject_translations[$subject['name']] ?? 'subject_default';
+$subject_name = t($subject_key);
+
+// Map translated subject names to icons
+$subject_icons = [
+    t('subject_math') => 'functions',
+    t('subject_physics') => 'bolt',
+    t('subject_chemistry') => 'science',
+    t('subject_biology') => 'eco',
+    t('subject_history') => 'history_edu',
+    t('subject_literature') => 'menu_book',
+    t('subject_russian') => 'translate',
+    t('subject_english') => 'language',
+    t('subject_geography') => 'public',
+    t('subject_informatics') => 'computer'
+];
+$icon = $subject_icons[$subject_name] ?? 'school';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Начать тест - <?= htmlspecialchars($subject['name']) ?></title>
+    <meta charset="UTF-8">
+    <title><?= t('page_title_test_start') ?> - <?= htmlspecialchars($subject_name) ?></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -169,28 +192,28 @@ $icon = $subject_icons[$subject['name']] ?? 'school';
             <div class="subject-icon">
                 <span class="material-icons"><?= $icon ?></span>
             </div>
-            <h1 class="subject-title">Тест по предмету: <?= htmlspecialchars($subject['name']) ?></h1>
+            <h1 class="subject-title"><?= t('test_subject') ?>: <?= htmlspecialchars($subject_name) ?></h1>
         </div>
         <form method="post" action="tests_run.php?subject_id=<?= $subject_id ?>" class="test-form">
             <div class="form-group">
-                <label for="student_name" class="form-label">Имя:</label>
+                <label for="student_name" class="form-label"><?= t('label_student_name') ?>:</label>
                 <input type="text" id="student_name" name="student_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label for="student_lastname" class="form-label">Фамилия:</label>
+                <label for="student_lastname" class="form-label"><?= t('label_student_lastname') ?>:</label>
                 <input type="text" id="student_lastname" name="student_lastname" class="form-input" required>
             </div>
             <div class="form-group">
-                <label for="student_class" class="form-label">Класс:</label>
+                <label for="student_class" class="form-label"><?= t('label_student_class') ?>:</label>
                 <input type="text" id="student_class" name="student_class" class="form-input" required>
             </div>
             <div class="form-group">
-                <label for="teacher_name" class="form-label">Имя учителя:</label>
+                <label for="teacher_name" class="form-label"><?= t('label_teacher_name') ?>:</label>
                 <input type="text" id="teacher_name" name="teacher_name" class="form-input" required>
             </div>
             <button type="submit" class="start-button">
                 <span class="material-icons">play_arrow</span>
-                Начать тест
+                <?= t('button_start_test') ?>
             </button>
         </form>
     </div>

@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . "/includes/functions.php";
 include(dirname(__DIR__) . "/includes/header-admin.php");
 include(dirname(__DIR__) . "/includes/sidebar-admin.php");
 
-session_start();
+
 checkAdmin();
 
 ini_set('display_errors', 1);

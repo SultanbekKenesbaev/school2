@@ -4,7 +4,6 @@ require_once "../includes/functions.php";
 include("../includes/header-admin.php");
 include("../includes/sidebar-admin.php");
 
-session_start();
 checkAdmin();
 
 $subject_id = $_GET['subject_id'];
@@ -229,4 +228,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </form>
 </div>
-<?php include("../includes/footer-admin.php"); ?>

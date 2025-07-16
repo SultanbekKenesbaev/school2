@@ -21,6 +21,15 @@
         <li>
             <a href="view_results.php">Результат Тесты</a>
         </li>
+        <li>
+            <a href="control_teachers.php">Управление учителя 2</a>
+        </li>
+        <li>
+            <a href="control_analytics.php">Результат контрольного работы </a>
+        </li>
+        <li>
+            <a href="control_analytics_teachers.php">Аналитика учителя   </a>
+        </li>
         <?php if (isset($_SESSION['admin'])): ?>
             <li><a href="../admin/logout.php">Выход</a></li>
         <?php endif; ?>

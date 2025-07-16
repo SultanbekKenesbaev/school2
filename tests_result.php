@@ -1,9 +1,10 @@
 <?php
 session_start();
 require_once "includes/db.php";
+require_once "includes/lang.php";
 
 if (!isset($_SESSION['test'])) {
-    die("Ошибка: сессия сброшена или тест не был завершён корректно.");
+    die(t('error_session_reset'));
 }
 
 $test = $_SESSION['test'];
@@ -41,15 +42,17 @@ try {
         json_encode($answers, JSON_UNESCAPED_UNICODE)
     ]);
 } catch (PDOException $e) {
-    die("Ошибка при сохранении в базу данных: " . $e->getMessage());
+    die(t('error_database_save') . ": " . $e->getMessage());
 }
 
 unset($_SESSION['test']);
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Результат</title>
+    <meta charset="UTF-8">
+    <title><?= t('page_title_result') ?></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -241,11 +244,11 @@ unset($_SESSION['test']);
 <body>
     <div class="result-container">
         <div class="result-header">
-            <h1 class="result-title">Результаты теста</h1>
+            <h1 class="result-title"><?= t('section_title_results') ?></h1>
             <div class="student-info">
                 <?= htmlspecialchars($test['student_name']) ?> <?= htmlspecialchars($test['student_lastname']) ?>,
-                класс <?= htmlspecialchars($test['student_class']) ?>,
-                учитель <?= htmlspecialchars($test['teacher_name']) ?>
+                <?= t('label_class') ?> <?= htmlspecialchars($test['student_class']) ?>,
+                <?= t('label_teacher') ?> <?= htmlspecialchars($test['teacher_name']) ?>
             </div>
         </div>
         <div class="score-container">
@@ -258,34 +261,34 @@ unset($_SESSION['test']);
                 <div class="score-text"><?= $score_percentage ?>%</div>
             </div>
             <div class="score-details">
-                <div class="correct-answers"><?= $correct ?> правильных</div>
-                <div class="total_questions">из 30 вопросов</div>
+                <div class="correct-answers"><?= $correct ?> <?= t('label_correct') ?></div>
+                <div class="total-questions"><?= t('label_total_questions', ['count' => 30]) ?></div>
             </div>
         </div>
         <div class="mistakes-section">
             <h2 class="section-title">
                 <span class="material-icons">error_outline</span>
-                Ошибки: <?= 30 - $correct ?>
+                <?= t('section_title_mistakes', ['count' => 30 - $correct]) ?>
             </h2>
             <ul class="mistakes-list">
                 <?php foreach ($details as $d): ?>
                     <?php if (!$d['is_correct']): ?>
                         <li class="mistake-item">
-                            <div class="question-text">Вопрос <?= $d['question'] ?></div>
+                            <div class="question-text"><?= t('label_question', ['number' => $d['question']]) ?></div>
                             <div class="answers-container">
                                 <div class="answer-box correct-answer">
                                     <div class="answer-label">
                                         <span class="material-icons" style="color: var(--success);">check_circle</span>
-                                        Правильный ответ
+                                        <?= t('label_correct_answer') ?>
                                     </div>
-                                    Вариант <?= $d['correct'] ?>
+                                    <?= t('label_option') ?> <?= $d['correct'] ?>
                                 </div>
                                 <div class="answer-box your-answer">
                                     <div class="answer-label">
                                         <span class="material-icons" style="color: var(--danger);">cancel</span>
-                                        Ваш ответ
+                                        <?= t('label_your_answer') ?>
                                     </div>
-                                    Вариант <?= $d['your_answer'] ?>
+                                    <?= t('label_option') ?> <?= $d['your_answer'] ?>
                                 </div>
                             </div>
                         </li>
@@ -294,7 +297,7 @@ unset($_SESSION['test']);
             </ul>
             <a href="tests.php" class="home-button">
                 <span class="material-icons">home</span>
-                На главную
+                <?= t('button_home') ?>
             </a>
         </div>
     </div>

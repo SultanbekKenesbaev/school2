@@ -1,17 +1,17 @@
 <?php
 require_once "includes/db.php";
 require_once "includes/functions.php";
+require_once "includes/lang.php";
 
 $stmt = $pdo->query("SELECT * FROM news ORDER BY created_at DESC");
 $news = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Новости</title>
+    <title><?= t('page_title_news') ?></title>
     <link rel="stylesheet" href="./public/css/styles.css">
     <link rel="stylesheet" href="./public/css/fotter.css">
     <link rel="stylesheet" href="./public/css/about.css">
@@ -155,27 +155,27 @@ $news = $stmt->fetchAll();
     <?php include("includes/header.php"); ?>
     <section class="dos-section">
         <div class="container">
-            <h2 class="dos-title">Новости</h2>
+            <h2 class="dos-title"><?= t('section_title_news') ?></h2>
             <div class="box-dos">
                 <?php foreach ($news as $item): ?>
                     <div class="dos-block">
                         <?php if (!empty($item['image'])): ?>
-                            <img class="dos-img" src="public/<?= htmlspecialchars($item['image']) ?>" alt="Новость" width="300">
+                            <img class="dos-img" src="public/<?= htmlspecialchars($item['image']) ?>" alt="<?= t('alt_news') ?>" width="300">
                         <?php endif; ?>
                         <div class="text-box-item">
                             <h3><?= htmlspecialchars($item['title']) ?></h3>
                             <p><?= nl2br(htmlspecialchars($item['content'])) ?></p>
                         </div>
-                        <button class="dos-btn">Подробнее</button>
-                        <p><small>Дата публикации: <?= date("d.m.Y H:i", strtotime($item['created_at'])) ?></small></p>
+                        <button class="dos-btn"><?= t('button_details') ?></button>
+                        <p><small><?= t('publication_date') ?>: <?= date("d.m.Y H:i", strtotime($item['created_at'])) ?></small></p>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
         <div id="modal" class="modal hidden">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <img id="modal-image" src="" alt="Изображение достижения" style="width: 100%; max-width: 400px; margin-bottom: 15px;">
+                <span class="close"><?= t('modal_close') ?></span>
+                <img id="modal-image" src="" alt="<?= t('alt_news_image') ?>" style="width: 100%; max-width: 400px; margin-bottom: 15px;">
                 <div class="text-box-item">
                     <h3 id="modal-title"></h3>
                     <p id="modal-description"></p>
@@ -233,5 +233,4 @@ $news = $stmt->fetchAll();
         });
     </script>
 </body>
-
 </html>

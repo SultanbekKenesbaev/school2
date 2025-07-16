@@ -1,10 +1,13 @@
 <?php
+
 require_once "../includes/db.php";
 require_once "../includes/functions.php";
 include("../includes/header-admin.php");
 include("../includes/sidebar-admin.php");
 
-session_start();
+
+
+
 checkAdmin();
 
 $subjects = $pdo->query("SELECT * FROM subjects")->fetchAll();
@@ -20,7 +23,8 @@ if ($subject_id) {
     $sql .= " WHERE r.subject_id = " . intval($subject_id);
 }
 
-$sql .= " ORDER BY r.correct_answers DESC, r.created_at DESC";
+$sql .= " ORDER BY r.correct_answers DESC";
+
 $results = $pdo->query($sql)->fetchAll();
 ?>
 
@@ -225,4 +229,3 @@ $results = $pdo->query($sql)->fetchAll();
     <?php endif; ?>
 </div>
 
-<?php include("../includes/footer-admin.php"); ?>

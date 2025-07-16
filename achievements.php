@@ -1,17 +1,17 @@
 <?php
 require_once "includes/db.php";
 require_once "includes/functions.php";
+require_once "includes/lang.php";
 
 $stmt = $pdo->query("SELECT * FROM achievements ORDER BY created_at DESC");
 $achievements = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Достижения</title>
+    <title><?= t('page_title_achievements') ?></title>
     <link rel="stylesheet" href="./public/css/styles.css">
     <link rel="stylesheet" href="./public/css/fotter.css">
     <link rel="stylesheet" href="./public/css/about.css">
@@ -149,42 +149,39 @@ $achievements = $stmt->fetchAll();
             }
         }
     </style>
-
 </head>
 
 <body>
     <?php include("includes/header.php"); ?>
     <section class="dos-section">
         <div class="container">
-            <h2 class="dos-title">Достижения</h2>
+            <h2 class="dos-title"><?= t('section_title_achievements') ?></h2>
             <div class="box-dos">
                 <?php foreach ($achievements as $item): ?>
                     <div class="dos-block">
                         <?php if (!empty($item['image'])): ?>
-                            <img class="dos-img" src="public/<?= htmlspecialchars($item['image']) ?>" alt="Достижение" width="300">
+                            <img class="dos-img" src="public/<?= htmlspecialchars($item['image']) ?>" alt="<?= t('alt_achievement') ?>" width="300">
                         <?php endif; ?>
                         <div class="text-box-item">
                             <h3><?= htmlspecialchars($item['title']) ?></h3>
                             <p><?= nl2br(htmlspecialchars($item['description'])) ?></p>
                         </div>
-                        <button class="dos-btn">Подробнее</button>
-                        <p><small>Дата публикации: <?= date("d.m.Y H:i", strtotime($item['created_at'])) ?></small></p>
+                        <button class="dos-btn"><?= t('button_details') ?></button>
+                        <p><small><?= t('publication_date') ?>: <?= date("d.m.Y H:i", strtotime($item['created_at'])) ?></small></p>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
         <div id="modal" class="modal hidden">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <img id="modal-image" src="" alt="Изображение достижения" style="width: 100%; max-width: 400px; margin-bottom: 15px;">
+                <span class="close"><?= t('modal_close') ?></span>
+                <img id="modal-image" src="" alt="<?= t('alt_achievement_image') ?>" style="width: 100%; max-width: 400px; margin-bottom: 15px;">
                 <div class="text-box-item">
                     <h3 id="modal-title"></h3>
                     <p id="modal-description"></p>
                 </div>
             </div>
         </div>
-
-
     </section>
     <?php include("includes/footer.php"); ?>
     <script>
@@ -235,8 +232,5 @@ $achievements = $stmt->fetchAll();
             });
         });
     </script>
-
-
 </body>
-
 </html>

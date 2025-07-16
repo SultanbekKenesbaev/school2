@@ -4,7 +4,6 @@ require_once "../includes/functions.php";
 include("../includes/header-admin.php");
 include("../includes/sidebar-admin.php");
 
-session_start();
 checkAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subject_name'])) {
@@ -206,4 +205,3 @@ foreach ($subjects as $subject) {
         </tbody>
     </table>
 </div>
-<?php include("../includes/footer-admin.php"); ?>

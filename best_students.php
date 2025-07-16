@@ -1,15 +1,15 @@
 <?php
 require_once "includes/db.php";
-
+require_once "includes/lang.php";
 
 $stmt = $pdo->query("SELECT * FROM students ORDER BY created_at DESC");
 $students = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8">
+    <title><?= t('page_title_best_students') ?></title>
     <link rel="stylesheet" href="./public/css/styles.css">
     <link rel="stylesheet" href="./public/css/fotter.css">
     <link rel="stylesheet" href="./public/css/about.css">
@@ -17,14 +17,13 @@ $students = $stmt->fetchAll();
     <link rel="stylesheet" href="./public/css/header.css">
     <link rel="stylesheet" href="./public/css/teachers.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 
 <body>
     <?php include("includes/header.php"); ?>
     <section class="dos-section">
         <div class="teacherst">
-            <h2 class="dos-title">Лучшие ученики</h2>
+            <h2 class="dos-title"><?= t('section_title_best_students') ?></h2>
             <div class="container">
                 <div class="cards">
                     <?php foreach ($students as $student): ?>
@@ -36,18 +35,18 @@ $students = $stmt->fetchAll();
                             data-image="public/<?= htmlspecialchars($student['image']) ?>">
 
                             <?php if ($student['image']): ?>
-                                <img src="public/<?= htmlspecialchars($student['image']) ?>" alt="Фото студента" width="150">
+                                <img src="public/<?= htmlspecialchars($student['image']) ?>" alt="<?= t('alt_student_photo') ?>" width="150">
                             <?php endif; ?>
 
                             <h3><?= htmlspecialchars($student['first_name']) ?> <?= htmlspecialchars($student['last_name']) ?></h3>
                             <p class="student-achievements" data-full="<?= htmlspecialchars($student['achievements']) ?>">
-                                <strong>Достижения:</strong> <?= nl2br(htmlspecialchars($student['achievements'])) ?>
+                                <strong><?= t('achievements_label') ?>:</strong> <?= nl2br(htmlspecialchars($student['achievements'])) ?>
                             </p>
                             <p class="student-about" data-full="<?= htmlspecialchars($student['about']) ?>">
                                 <?= nl2br(htmlspecialchars($student['about'])) ?>
                             </p>
 
-                            <button class="more-btn">Подробнее</button>
+                            <button class="more-btn"><?= t('button_details') ?></button>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -56,12 +55,12 @@ $students = $stmt->fetchAll();
     </section>
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <img id="modal-image" src="" alt="">
+            <span class="close-btn"><?= t('modal_close') ?></span>
+            <img id="modal-image" src="" alt="<?= t('alt_student_photo') ?>">
             <h3 id="modal-name"></h3>
-            <p><strong>Достижения:</strong></p>
+            <p><strong><?= t('achievements_label') ?>:</strong></p>
             <p id="modal-achievements"></p>
-            <p><strong>О себе:</strong></p>
+            <p><strong><?= t('about_label') ?>:</strong></p>
             <p id="modal-about"></p>
         </div>
     </div>
@@ -70,6 +69,9 @@ $students = $stmt->fetchAll();
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const MAX_LENGTH = 20;
+            const translations = {
+                achievements_label: "<?= t('achievements_label') ?>"
+            };
 
             function truncateText(text, maxLength) {
                 if (!text) return "";
@@ -82,7 +84,7 @@ $students = $stmt->fetchAll();
             document.querySelectorAll('.student-achievements').forEach(el => {
                 const full = el.dataset.full || '';
                 const truncated = truncateText(full, MAX_LENGTH);
-                el.innerHTML = "<strong>Достижения:</strong> " + truncated;
+                el.innerHTML = `<strong>${translations.achievements_label}:</strong> ${truncated}`;
             });
 
             document.querySelectorAll('.student-about').forEach(el => {
@@ -105,7 +107,7 @@ $students = $stmt->fetchAll();
 
             buttons.forEach(button => {
                 button.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
+                    e.stopPropagation();
                     const card = button.closest('.teacher-card');
 
                     modalImg.src = card.dataset.image;
@@ -132,5 +134,4 @@ $students = $stmt->fetchAll();
         });
     </script>
 </body>
-
 </html>

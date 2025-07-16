@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html lang="ru">
+<?php
+require_once "includes/lang.php";
+?>
 
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>О школе</title>
+    <title><?= t('page_title_about') ?></title>
     <link rel="stylesheet" href="./public/css/styles.css">
     <link rel="stylesheet" href="./public/css/fotter.css">
     <link rel="stylesheet" href="./public/css/about.css">
@@ -95,7 +98,6 @@
     gap: 20px;
   }
 }
-
     </style>
 </head>
 
@@ -103,47 +105,47 @@
     <?php include("includes/header.php"); ?>
     <section class="about-section">
         <div class="container">
-            <h1>О Нас</h1>
+            <h1><?= t('section_title_about') ?></h1>
             <div class="content-about-block">
                 <div class="img-about">
                     <div class="border-img">
-                        <img src="./public/images/school/2.jpg" alt="" class="about-img">
+                        <img src="./public/images/school/2.jpg" alt="<?= t('alt_school_image') ?>" class="about-img">
                     </div>
                 </div>
                 <div class="text-about">
                     <div class="about-item">
-                        <h1>О нашей школе</h1>
-                        <p>Наша школа — это образовательное учреждение с богатой историей и традициями, расположенное в сердце Нукусского района. С момента своего основания в [год основания] году, мы стремимся создавать условия для всестороннего развития каждого ученика.</p>
+                        <h1><?= t('about_our_school') ?></h1>
+                        <p><?= t('about_our_school_desc') ?></p>
                     </div>
                     <div class="about-item">
-                        <h1>Наша миссия</h1>
-                        <p>Мы верим, что образование — это ключ к успешному будущему. Наша миссия заключается в предоставлении качественного образования, воспитании гражданственности, уважения к культуре и традициям, а также формировании навыков, необходимых для жизни в современном мире.</p>
+                        <h1><?= t('our_mission') ?></h1>
+                        <p><?= t('our_mission_desc') ?></p>
                     </div>
                     <div class="about-item">
-                        <h1>Присоединяйтесь к нам</h1>
-                        <p>Мы приглашаем вас стать частью нашей дружной школьной семьи. Посещая нашу школу, вы получаете не только знания, но и возможность развиваться, расти и достигать новых высот.​</p>
+                        <h1><?= t('join_us') ?></h1>
+                        <p><?= t('join_us_desc') ?></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <h2 class="title-struc">Руководство и педагогический состав</h2>
+            <h2 class="title-struc"><?= t('leadership_and_staff') ?></h2>
             <div class="container1">
                 <div class="box">
-                    <img src="./public/images/director.jpg" alt="Директор">
-                    <div class="title">Директор</div>
-                    <p>Каллибекова Гаухаргул Сатбаевна</p>
+                    <img src="./public/images/director.jpg" alt="<?= t('alt_director') ?>">
+                    <div class="title"><?= t('director') ?></div>
+                    <p><?= t('director_name') ?></p>
                 </div>
                 <div class="hierarchy">
                     <div class="box">
-                        <img src="./public/images/zamdirector.jpg" alt="Заместитель">
-                        <div class="title">Заместитель директора</div>
-                        <p>Абдисаттаров Ерназар Умирбаевич</p>
+                        <img src="./public/images/zamdirector.jpg" alt="<?= t('alt_deputy_director') ?>">
+                        <div class="title"><?= t('deputy_director') ?></div>
+                        <p><?= t('deputy_director_1_name') ?></p>
                     </div>
                     <div class="box">
-                        <img src="./public/images/zamdirector2.jpg" alt="Заместитель">
-                        <div class="title">Заместитель директора</div>
-                        <p>Жумамуратова Зухра  Жумабековна</p>
+                        <img src="./public/images/zamdirector2.jpg" alt="<?= t('alt_deputy_director') ?>">
+                        <div class="title"><?= t('deputy_director') ?></div>
+                        <p><?= t('deputy_director_2_name') ?></p>
                     </div>
                 </div>
             </div>
@@ -151,5 +153,4 @@
     </section>
     <?php include("includes/footer.php"); ?>
 </body>
-
 </html>
